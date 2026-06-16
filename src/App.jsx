@@ -4,7 +4,8 @@ import JoinGroup from "./Components/JoinGroup";
 import ChatRoom from "./Components/ChatRoom";
 import "./App.css";
 
-const SOCKET_URL = "http://localhost:5050";
+
+const SOCKET_URL = "https://chatapp-server-ruddy.vercel.app";
 
 function App() {
   const [socket, setSocket] = useState(null);
@@ -22,10 +23,13 @@ function App() {
   });
 
   useEffect(() => {
-    const newSocket = io(SOCKET_URL);
+    
+    const newSocket = io(SOCKET_URL, {
+      transports: ["polling", "websocket"] 
+    });
 
     newSocket.on("connect", () => {
-      console.log("Connected:", newSocket.id);
+      console.log("Connected to Live Vercel Server:", newSocket.id);
     });
 
     setSocket(newSocket);
